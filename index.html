@@ -157,9 +157,24 @@
             font-weight: 500;
         }
 
+        /* Updated Accordion Styles */
         .accordion {
+            max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .accordion.expanded {
+            max-height: 500px;
+        }
+        
+        .accordion-icon {
+            transition: transform 0.3s ease;
+            margin-left: auto;
+        }
+        
+        .accordion-toggle.active .accordion-icon {
+            transform: rotate(180deg);
         }
 
         .accordion-content {
@@ -462,6 +477,99 @@
             background: rgba(230, 81, 0, 0.2);
         }
 
+        /* Course details row styles */
+        .course-details {
+            display: none;
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .dark-mode .course-details {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .course-details.show {
+            display: table-row;
+        }
+
+        .course-details td {
+            padding: 20px;
+            vertical-align: top;
+        }
+
+        .details-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .details-section {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .details-section h4 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .details-section ul {
+            list-style-type: none;
+        }
+
+        .details-section li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .details-section i {
+            margin-right: 8px;
+            color: var(--gray);
+            width: 18px;
+            text-align: center;
+        }
+
+        .expand-btn {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .expand-btn:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .dark-mode .expand-btn:hover {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Table Toggle Button */
+        .toggle-table-btn {
+            padding: 10px 20px;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toggle-table-btn:hover {
+            background-color: var(--secondary);
+        }
+
+        .dark-mode .toggle-table-btn {
+            background-color: var(--secondary);
+        }
+
+        .dark-mode .toggle-table-btn:hover {
+            background-color: var(--primary);
+        }
+
         /* Responsive Styles */
         @media (max-width: 992px) {
             .sidebar {
@@ -481,6 +589,16 @@
             }
         }
 
+        @media (max-width: 768px) {
+            .dashboard-cards {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .details-container {
+                flex-direction: column;
+            }
+        }
+
         @media (max-width: 576px) {
             .dashboard-cards {
                 grid-template-columns: 1fr;
@@ -492,6 +610,56 @@
             
             .content-area {
                 padding: 15px;
+            }
+
+            table, thead, tbody, th, td, tr {
+                display: block;
+            }
+
+            thead tr {
+                position: absolute;
+                top: -9999px;
+                left: -9999px;
+            }
+
+            tr {
+                margin-bottom: 15px;
+                border: 1px solid rgba(0, 0, 0, 0.1);
+                border-radius: 8px;
+            }
+
+            .dark-mode tr {
+                border-color: rgba(255, 255, 255, 0.1);
+            }
+
+            td {
+                border: none;
+                position: relative;
+                padding-left: 50%;
+            }
+
+            td:before {
+                position: absolute;
+                left: 15px;
+                width: 45%;
+                padding-right: 10px;
+                white-space: nowrap;
+                font-weight: 600;
+            }
+
+            td:nth-of-type(1):before { content: "Time"; }
+            td:nth-of-type(2):before { content: "Monday"; }
+            td:nth-of-type(3):before { content: "Tuesday"; }
+            td:nth-of-type(4):before { content: "Wednesday"; }
+            td:nth-of-type(5):before { content: "Thursday"; }
+            td:nth-of-type(6):before { content: "Friday"; }
+
+            .course-details td {
+                padding-left: 15px;
+            }
+
+            .course-details td:before {
+                display: none;
             }
         }
 
@@ -514,6 +682,59 @@
             to { transform: translateX(-100%); }
         }
 
+        /* Theme Toggle Switch */
+        .theme-switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+            margin-left: 10px;
+        }
+
+        .theme-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .theme-label {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+
         /* Hover area to keep sidebar visible */
         .sidebar-hover-area {
             position: fixed;
@@ -529,193 +750,6 @@
             .sidebar-hover-area {
                 display: block;
             }
-        }
-
-        /* New Theme Toggle Switch Styles */
-        .theme-switch {
-            --toggle-size: 20px;
-            --container-width: 3.75em;
-            --container-height: 1.666em;
-            --container-radius: 6.25em;
-            --container-light-bg: #3D7EAE;
-            --container-night-bg: #1D1F2C;
-            --circle-container-diameter: 2.25em;
-            --sun-moon-diameter: 1.416em;
-            --sun-bg: #ECCA2F;
-            --moon-bg: #C4C9D1;
-            --spot-color: #959DB1;
-            --circle-container-offset: calc((var(--circle-container-diameter) - var(--container-height)) / 2 * -1);
-            --stars-color: #fff;
-            --clouds-color: #F3FDFF;
-            --back-clouds-color: #AACADF;
-            --transition: .5s cubic-bezier(0, -0.02, 0.4, 1.25);
-            --circle-transition: .3s cubic-bezier(0, -0.02, 0.35, 1.17);
-            margin-left: 10px;
-        }
-
-        .theme-switch, .theme-switch *, .theme-switch *::before, .theme-switch *::after {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-size: var(--toggle-size);
-        }
-
-        .theme-switch__container {
-            width: var(--container-width);
-            height: var(--container-height);
-            background-color: var(--container-light-bg);
-            border-radius: var(--container-radius);
-            overflow: hidden;
-            cursor: pointer;
-            box-shadow: 0em -0.062em 0.062em rgba(0, 0, 0, 0.25), 0em 0.062em 0.125em rgba(255, 255, 255, 0.94);
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .theme-switch__container::before {
-            content: "";
-            position: absolute;
-            z-index: 1;
-            inset: 0;
-            box-shadow: 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset, 0em 0.05em 0.187em rgba(0, 0, 0, 0.25) inset;
-            border-radius: var(--container-radius)
-        }
-
-        .theme-switch__checkbox {
-            display: none;
-        }
-
-        .theme-switch__circle-container {
-            width: var(--circle-container-diameter);
-            height: var(--circle-container-diameter);
-            background-color: rgba(255, 255, 255, 0.1);
-            position: absolute;
-            left: var(--circle-container-offset);
-            top: var(--circle-container-offset);
-            border-radius: var(--container-radius);
-            box-shadow: inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), inset 0 0 0 3.375em rgba(255, 255, 255, 0.1), 0 0 0 0.625em rgba(255, 255, 255, 0.1), 0 0 0 1.25em rgba(255, 255, 255, 0.1);
-            display: flex;
-            transition: var(--circle-transition);
-            pointer-events: none;
-        }
-
-        .theme-switch__sun-moon-container {
-            pointer-events: auto;
-            position: relative;
-            z-index: 2;
-            width: var(--sun-moon-diameter);
-            height: var(--sun-moon-diameter);
-            margin: auto;
-            border-radius: var(--container-radius);
-            background-color: var(--sun-bg);
-            box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #a1872a inset;
-            filter: drop-shadow(0.062em 0.125em 0.125em rgba(0, 0, 0, 0.25)) drop-shadow(0em 0.062em 0.125em rgba(0, 0, 0, 0.25));
-            overflow: hidden;
-            transition: var(--transition);
-        }
-
-        .theme-switch__moon {
-            transform: translateX(100%);
-            width: 100%;
-            height: 100%;
-            background-color: var(--moon-bg);
-            border-radius: inherit;
-            box-shadow: 0.062em 0.062em 0.062em 0em rgba(254, 255, 239, 0.61) inset, 0em -0.062em 0.062em 0em #969696 inset;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        .theme-switch__spot {
-            position: absolute;
-            top: 0.5em;
-            left: 0.208em;
-            width: 0.5em;
-            height: 0.5em;
-            border-radius: var(--container-radius);
-            background-color: var(--spot-color);
-            box-shadow: 0em 0.0312em 0.062em rgba(0, 0, 0, 0.25) inset;
-        }
-
-        .theme-switch__spot:nth-of-type(2) {
-            width: 0.25em;
-            height: 0.25em;
-            top: 0.625em;
-            left: 0.916em;
-        }
-
-        .theme-switch__spot:nth-last-of-type(3) {
-            width: 0.166em;
-            height: 0.166em;
-            top: 0.208em;
-            left: 0.541em;
-        }
-
-        .theme-switch__clouds {
-            width: 0.833em;
-            height: 0.833em;
-            background-color: var(--clouds-color);
-            border-radius: var(--container-radius);
-            position: absolute;
-            bottom: -0.416em;
-            left: 0.208em;
-            box-shadow: 0.625em 0.208em var(--clouds-color), -0.208em -0.208em var(--back-clouds-color), 0.958em 0.25em var(--clouds-color), 0.333em -0.083em var(--back-clouds-color), 1.458em 0 var(--clouds-color), 0.833em -0.041em var(--back-clouds-color), 1.958em 0.208em var(--clouds-color), 1.333em -0.208em var(--back-clouds-color), 2.416em -0.041em var(--clouds-color), 1.75em 0em var(--back-clouds-color), 3em -0.208em var(--clouds-color), 2.25em -0.291em var(--back-clouds-color), 3.083em -1.166em 0 0.291em var(--clouds-color), 2.666em -0.416em var(--back-clouds-color), 2.75em -1.416em 0 0.291em var(--back-clouds-color);
-            transition: 0.5s cubic-bezier(0, -0.02, 0.4, 1.25);
-        }
-
-        .theme-switch__stars-container {
-            position: absolute;
-            color: var(--stars-color);
-            top: -100%;
-            left: 0.208em;
-            width: 1.833em;
-            height: auto;
-            transition: var(--transition);
-        }
-
-        /* actions */
-        .theme-switch__checkbox:checked + .theme-switch__container {
-            background-color: var(--container-night-bg);
-        }
-
-        .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container {
-            left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter));
-        }
-
-        .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__circle-container:hover {
-            left: calc(100% - var(--circle-container-offset) - var(--circle-container-diameter) - 0.125em)
-        }
-
-        .theme-switch__circle-container:hover {
-            left: calc(var(--circle-container-offset) + 0.125em);
-        }
-
-        .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__moon {
-            transform: translate(0);
-        }
-
-        .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__clouds {
-            bottom: -2.708em;
-        }
-
-        .theme-switch__checkbox:checked + .theme-switch__container .theme-switch__stars-container {
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .theme-label {
-            display: flex;
-            align-items: center;
-            font-size: 14px;
-            padding: 10px 20px 10px 40px;
-            cursor: pointer;
-        }
-
-        .theme-label i {
-            margin-right: 10px;
-        }
-
-        .theme-label span {
-            margin-right: 10px;
         }
     </style>
 </head>
@@ -741,12 +775,12 @@
                     <span class="menu-text">Dashboard</span>
                 </div>
                 
-                <div class="menu-item accordion-toggle">
+                <div class="menu-item accordion-toggle" id="courses-toggle">
                     <i class="fas fa-book"></i>
                     <span class="menu-text">Courses</span>
-                    <i class="fas fa-chevron-down accordion-icon" style="margin-left: auto;"></i>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
                 </div>
-                <div class="accordion">
+                <div class="accordion" id="courses-accordion">
                     <div class="accordion-content">
                         <div class="submenu-item">
                             <i class="fas fa-circle-notch"></i>
@@ -763,12 +797,12 @@
                     </div>
                 </div>
                 
-                <div class="menu-item accordion-toggle">
+                <div class="menu-item accordion-toggle" id="schedule-toggle">
                     <i class="fas fa-calendar-alt"></i>
                     <span class="menu-text">Schedule</span>
-                    <i class="fas fa-chevron-down accordion-icon" style="margin-left: auto;"></i>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
                 </div>
-                <div class="accordion">
+                <div class="accordion" id="schedule-accordion">
                     <div class="accordion-content">
                         <div class="submenu-item">
                             <i class="fas fa-clock"></i>
@@ -785,12 +819,12 @@
                     </div>
                 </div>
                 
-                <div class="menu-item accordion-toggle">
+                <div class="menu-item accordion-toggle" id="grades-toggle">
                     <i class="fas fa-chart-bar"></i>
                     <span class="menu-text">Grades</span>
-                    <i class="fas fa-chevron-down accordion-icon" style="margin-left: auto;"></i>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
                 </div>
-                <div class="accordion">
+                <div class="accordion" id="grades-accordion">
                     <div class="accordion-content">
                         <div class="submenu-item">
                             <i class="fas fa-percentage"></i>
@@ -824,12 +858,12 @@
             </div>
             
             <div class="sidebar-footer">
-                <div class="menu-item accordion-toggle">
+                <div class="menu-item accordion-toggle" id="settings-toggle">
                     <i class="fas fa-cog"></i>
                     <span class="menu-text">Settings</span>
-                    <i class="fas fa-chevron-down accordion-icon" style="margin-left: auto;"></i>
+                    <i class="fas fa-chevron-down accordion-icon"></i>
                 </div>
-                <div class="accordion">
+                <div class="accordion" id="settings-accordion">
                     <div class="accordion-content">
                         <div class="submenu-item">
                             <i class="fas fa-key"></i>
@@ -843,24 +877,8 @@
                             <i class="fas fa-moon"></i>
                             <span>Dark Mode</span>
                             <label class="theme-switch">
-                                <input type="checkbox" class="theme-switch__checkbox" id="theme-toggle">
-                                <div class="theme-switch__container">
-                                    <div class="theme-switch__clouds"></div>
-                                    <div class="theme-switch__stars-container">
-                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 144 55" fill="none">
-                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M135.831 3.00688C135.055 3.85027 134.111 4.29946 133 4.35447C134.111 4.40947 135.055 4.85867 135.831 5.71123C136.607 6.55462 136.996 7.56303 136.996 8.72727C136.996 7.95722 137.172 7.25134 137.525 6.59129C137.886 5.93124 138.372 5.39954 138.98 5.00535C139.598 4.60199 140.268 4.39114 141 4.35447C139.88 4.2903 138.936 3.85027 138.16 3.00688C137.384 2.16348 136.996 1.16425 136.996 0C136.996 1.16425 136.607 2.16348 135.831 3.00688ZM31 23.3545C32.1114 23.2995 33.0551 22.8503 33.8313 22.0069C34.6075 21.1635 34.9956 20.1642 34.9956 19C34.9956 20.1642 35.3837 21.1635 36.1599 22.0069C36.9361 22.8503 37.8798 23.2903 39 23.3545C38.2679 23.3911 37.5976 23.602 36.9802 24.0053C36.3716 24.3995 35.8864 24.9312 35.5248 25.5913C35.172 26.2513 34.9956 26.9572 34.9956 27.7273C34.9956 26.563 34.6075 25.5546 33.8313 24.7112C33.0551 23.8587 32.1114 23.4095 31 23.3545ZM0 36.3545C1.11136 36.2995 2.05513 35.8503 2.83131 35.0069C3.6075 34.1635 3.99559 33.1642 3.99559 32C3.99559 33.1642 4.38368 34.1635 5.15987 35.0069C5.93605 35.8503 6.87982 36.2903 8 36.3545C7.26792 36.3911 6.59757 36.602 5.98015 37.0053C5.37155 37.3995 4.88644 37.9312 4.52481 38.5913C4.172 39.2513 3.99559 39.9572 3.99559 40.7273C3.99559 39.563 3.6075 38.5546 2.83131 37.7112C2.05513 36.8587 1.11136 36.4095 0 36.3545ZM56.8313 24.0069C56.0551 24.8503 55.1114 25.2995 54 25.3545C55.1114 25.4095 56.0551 25.8587 56.8313 26.7112C57.6075 27.5546 57.9956 28.563 57.9956 29.7273C57.9956 28.9572 58.172 28.2513 58.5248 27.5913C58.8864 26.9312 59.3716 26.3995 59.9802 26.0053C60.5976 25.602 61.2679 25.3911 62 25.3545C60.8798 25.2903 59.9361 24.8503 59.1599 24.0069C58.3837 23.1635 57.9956 22.1642 57.9956 21C57.9956 22.1642 57.6075 23.1635 56.8313 24.0069ZM81 25.3545C82.1114 25.2995 83.0551 24.8503 83.8313 24.0069C84.6075 23.1635 84.9956 22.1642 84.9956 21C84.9956 22.1642 85.3837 23.1635 86.1599 24.0069C86.9361 24.8503 87.8798 25.2903 89 25.3545C88.2679 25.3911 87.5976 25.602 86.9802 26.0053C86.3716 26.3995 85.8864 26.9312 85.5248 27.5913C85.172 28.2513 84.9956 28.9572 84.9956 29.7273C84.9956 28.563 84.6075 27.5546 83.8313 26.7112C83.0551 25.8587 82.1114 25.4095 81 25.3545ZM136 36.3545C137.111 36.2995 138.055 35.8503 138.831 35.0069C139.607 34.1635 139.996 33.1642 139.996 32C139.996 33.1642 140.384 34.1635 141.16 35.0069C141.936 35.8503 142.88 36.2903 144 36.3545C143.268 36.3911 142.598 36.602 141.98 37.0053C141.372 37.3995 140.886 37.9312 140.525 38.5913C140.172 39.2513 139.996 39.9572 139.996 40.7273C139.996 39.563 139.607 38.5546 138.831 37.7112C138.055 36.8587 137.111 36.4095 136 36.3545ZM101.831 49.0069C101.055 49.8503 100.111 50.2995 99 50.3545C100.111 50.4095 101.055 50.8587 101.831 51.7112C102.607 52.5546 102.996 53.563 102.996 54.7273C102.996 53.9572 103.172 53.2513 103.525 52.5913C103.886 51.9312 104.372 51.3995 104.98 51.0053C105.598 50.602 106.268 50.3911 107 50.3545C105.88 50.2903 104.936 49.8503 104.16 49.0069C103.384 48.1635 102.996 47.1642 102.996 46C102.996 47.1642 102.607 48.1635 101.831 49.0069Z" fill="currentColor"></path>
-                                        </svg>
-                                    </div>
-                                    <div class="theme-switch__circle-container">
-                                        <div class="theme-switch__sun-moon-container">
-                                            <div class="theme-switch__moon">
-                                                <div class="theme-switch__spot"></div>
-                                                <div class="theme-switch__spot"></div>
-                                                <div class="theme-switch__spot"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <input type="checkbox" id="theme-toggle">
+                                <span class="slider"></span>
                             </label>
                         </div>
                         <div class="submenu-item">
@@ -963,12 +981,18 @@
                 </div>
                 
                 <div class="timetable">
-                    <h2 class="section-title">
-                        <i class="fas fa-calendar-alt"></i>
-                        Weekly Schedule
-                    </h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <h2 class="section-title">
+                            <i class="fas fa-calendar-alt"></i>
+                            Weekly Schedule
+                        </h2>
+                        <button class="toggle-table-btn" id="toggleTableBtn">
+                            <i class="fas fa-table"></i>
+                            <span>Show Timetable</span>
+                        </button>
+                    </div>
                     
-                    <div class="table-responsive">
+                    <div class="table-responsive" id="scheduleTable" style="display: none;">
                         <table>
                             <thead>
                                 <tr>
@@ -981,7 +1005,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
+                                <!-- Thermodynamics Row -->
+                                <tr class="expand-btn" data-course="thermodynamics">
                                     <td>9:00 - 10:30</td>
                                     <td>
                                         <strong>Thermodynamics</strong><br>
@@ -997,7 +1022,40 @@
                                     <td></td>
                                     <td></td>
                                 </tr>
-                                <tr>
+                                <tr class="course-details" id="thermodynamics-details">
+                                    <td colspan="6">
+                                        <div class="details-container">
+                                            <div class="details-section">
+                                                <h4><i class="fas fa-info-circle"></i> Course Information</h4>
+                                                <ul>
+                                                    <li><i class="fas fa-book"></i> Course Code: ENGG 301</li>
+                                                    <li><i class="fas fa-user"></i> Instructor: Prof. John Smith</li>
+                                                    <li><i class="fas fa-envelope"></i> Email: j.smith@university.edu</li>
+                                                    <li><i class="fas fa-building"></i> Room: ENG-205</li>
+                                                </ul>
+                                            </div>
+                                            <div class="details-section">
+                                                <h4><i class="fas fa-tasks"></i> Assignments</h4>
+                                                <ul>
+                                                    <li><i class="fas fa-file-alt"></i> Assignment 1: Due Oct 15</li>
+                                                    <li><i class="fas fa-file-alt"></i> Assignment 2: Due Oct 29</li>
+                                                    <li><i class="fas fa-file-alt"></i> Midterm: Nov 12</li>
+                                                </ul>
+                                            </div>
+                                            <div class="details-section">
+                                                <h4><i class="fas fa-chart-bar"></i> Grading</h4>
+                                                <ul>
+                                                    <li><i class="fas fa-percentage"></i> Assignments: 30%</li>
+                                                    <li><i class="fas fa-percentage"></i> Midterm: 30%</li>
+                                                    <li><i class="fas fa-percentage"></i> Final Exam: 40%</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <!-- Fluid Mechanics Row -->
+                                <tr class="expand-btn" data-course="fluid-mechanics">
                                     <td>10:45 - 12:15</td>
                                     <td></td>
                                     <td>
@@ -1013,7 +1071,40 @@
                                     </td>
                                     <td></td>
                                 </tr>
-                                <tr>
+                                <tr class="course-details" id="fluid-mechanics-details">
+                                    <td colspan="6">
+                                        <div class="details-container">
+                                            <div class="details-section">
+                                                <h4><i class="fas fa-info-circle"></i> Course Information</h4>
+                                                <ul>
+                                                    <li><i class="fas fa-book"></i> Course Code: ENGG 302</li>
+                                                    <li><i class="fas fa-user"></i> Instructor: Prof. Sarah Johnson</li>
+                                                    <li><i class="fas fa-envelope"></i> Email: s.johnson@university.edu</li>
+                                                    <li><i class="fas fa-building"></i> Room: ENG-210</li>
+                                                </ul>
+                                            </div>
+                                            <div class="details-section">
+                                                <h4><i class="fas fa-tasks"></i> Assignments</h4>
+                                                <ul>
+                                                    <li><i class="fas fa-file-alt"></i> Lab Report 1: Due Oct 18</li>
+                                                    <li><i class="fas fa-file-alt"></i> Problem Set 2: Due Nov 1</li>
+                                                    <li><i class="fas fa-file-alt"></i> Final Project: Dec 10</li>
+                                                </ul>
+                                            </div>
+                                            <div class="details-section">
+                                                <h4><i class="fas fa-chart-bar"></i> Grading</h4>
+                                                <ul>
+                                                    <li><i class="fas fa-percentage"></i> Labs: 25%</li>
+                                                    <li><i class="fas fa-percentage"></i> Problem Sets: 25%</li>
+                                                    <li><i class="fas fa-percentage"></i> Final Project: 50%</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <!-- Materials Science Row -->
+                                <tr class="expand-btn" data-course="materials-science">
                                     <td>13:30 - 15:00</td>
                                     <td>
                                         <strong>Materials Science</strong><br>
@@ -1033,7 +1124,40 @@
                                         TA: Alex
                                     </td>
                                 </tr>
-                                <tr>
+                                <tr class="course-details" id="materials-science-details">
+                                    <td colspan="6">
+                                        <div class="details-container">
+                                            <div class="details-section">
+                                                <h4><i class="fas fa-info-circle"></i> Course Information</h4>
+                                                <ul>
+                                                    <li><i class="fas fa-book"></i> Course Code: ENGG 303</li>
+                                                    <li><i class="fas fa-user"></i> Instructor: Prof. Michael Lee</li>
+                                                    <li><i class="fas fa-envelope"></i> Email: m.lee@university.edu</li>
+                                                    <li><i class="fas fa-building"></i> Room: ENG-305</li>
+                                                </ul>
+                                            </div>
+                                            <div class="details-section">
+                                                <h4><i class="fas fa-tasks"></i> Assignments</h4>
+                                                <ul>
+                                                    <li><i class="fas fa-flask"></i> Lab Report 1: Due Oct 20</li>
+                                                    <li><i class="fas fa-file-alt"></i> Quiz 1: Oct 25</li>
+                                                    <li><i class="fas fa-file-alt"></i> Final Exam: Dec 15</li>
+                                                </ul>
+                                            </div>
+                                            <div class="details-section">
+                                                <h4><i class="fas fa-chart-bar"></i> Grading</h4>
+                                                <ul>
+                                                    <li><i class="fas fa-percentage"></i> Labs: 30%</li>
+                                                    <li><i class="fas fa-percentage"></i> Quizzes: 20%</li>
+                                                    <li><i class="fas fa-percentage"></i> Final Exam: 50%</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                                <!-- Control Systems Row -->
+                                <tr class="expand-btn" data-course="control-systems">
                                     <td>15:15 - 16:45</td>
                                     <td></td>
                                     <td>
@@ -1051,6 +1175,37 @@
                                         <strong>Control Systems</strong><br>
                                         <span class="badge badge-lecture">Lecture</span><br>
                                         Prof. Chen
+                                    </td>
+                                </tr>
+                                <tr class="course-details" id="control-systems-details">
+                                    <td colspan="6">
+                                        <div class="details-container">
+                                            <div class="details-section">
+                                                <h4><i class="fas fa-info-circle"></i> Course Information</h4>
+                                                <ul>
+                                                    <li><i class="fas fa-book"></i> Course Code: ENGG 304</li>
+                                                    <li><i class="fas fa-user"></i> Instructor: Prof. Lisa Chen</li>
+                                                    <li><i class="fas fa-envelope"></i> Email: l.chen@university.edu</li>
+                                                    <li><i class="fas fa-building"></i> Room: ENG-310</li>
+                                                </ul>
+                                            </div>
+                                            <div class="details-section">
+                                                <h4><i class="fas fa-tasks"></i> Assignments</h4>
+                                                <ul>
+                                                    <li><i class="fas fa-file-alt"></i> Problem Set 1: Due Oct 22</li>
+                                                    <li><i class="fas fa-flask"></i> Lab Project: Nov 15</li>
+                                                    <li><i class="fas fa-file-alt"></i> Final Exam: Dec 18</li>
+                                                </ul>
+                                            </div>
+                                            <div class="details-section">
+                                                <h4><i class="fas fa-chart-bar"></i> Grading</h4>
+                                                <ul>
+                                                    <li><i class="fas fa-percentage"></i> Problem Sets: 20%</li>
+                                                    <li><i class="fas fa-percentage"></i> Lab Project: 30%</li>
+                                                    <li><i class="fas fa-percentage"></i> Final Exam: 50%</li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -1078,22 +1233,52 @@
                 sidebar.classList.remove('visible');
             });
             
-            // Accordion functionality
-            const accordionToggles = document.querySelectorAll('.accordion-toggle');
+            // Improved Accordion functionality for sidebar menu
+            const accordionToggles = {
+                courses: {
+                    toggle: document.getElementById('courses-toggle'),
+                    accordion: document.getElementById('courses-accordion')
+                },
+                schedule: {
+                    toggle: document.getElementById('schedule-toggle'),
+                    accordion: document.getElementById('schedule-accordion')
+                },
+                grades: {
+                    toggle: document.getElementById('grades-toggle'),
+                    accordion: document.getElementById('grades-accordion')
+                },
+                settings: {
+                    toggle: document.getElementById('settings-toggle'),
+                    accordion: document.getElementById('settings-accordion')
+                }
+            };
             
-            accordionToggles.forEach(toggle => {
-                toggle.addEventListener('click', function() {
-                    const accordion = this.nextElementSibling;
-                    const icon = this.querySelector('.accordion-icon');
+            // Initialize all accordions to be closed
+            Object.values(accordionToggles).forEach(item => {
+                item.accordion.style.maxHeight = '0';
+            });
+            
+            // Set up click handlers for each accordion toggle
+            Object.values(accordionToggles).forEach(item => {
+                item.toggle.addEventListener('click', function() {
+                    // Close all other accordions
+                    Object.values(accordionToggles).forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.accordion.classList.remove('expanded');
+                            otherItem.accordion.style.maxHeight = '0';
+                            otherItem.toggle.classList.remove('active');
+                        }
+                    });
                     
-                    if (accordion.style.maxHeight) {
-                        accordion.style.maxHeight = null;
-                        icon.classList.remove('fa-chevron-up');
-                        icon.classList.add('fa-chevron-down');
+                    // Toggle the clicked accordion
+                    if (item.accordion.classList.contains('expanded')) {
+                        item.accordion.classList.remove('expanded');
+                        item.accordion.style.maxHeight = '0';
+                        item.toggle.classList.remove('active');
                     } else {
-                        accordion.style.maxHeight = accordion.scrollHeight + 'px';
-                        icon.classList.remove('fa-chevron-down');
-                        icon.classList.add('fa-chevron-up');
+                        item.accordion.classList.add('expanded');
+                        item.accordion.style.maxHeight = item.accordion.scrollHeight + 'px';
+                        item.toggle.classList.add('active');
                     }
                 });
             });
@@ -1113,4 +1298,125 @@
                 }
             });
             
-            //
+            // Dark mode toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            
+            themeToggle.addEventListener('change', function() {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('darkMode', this.checked);
+            });
+            
+            // Check for saved theme preference
+            if (localStorage.getItem('darkMode') === 'true') {
+                themeToggle.checked = true;
+                document.body.classList.add('dark-mode');
+            }
+            
+            // Improved sidebar behavior
+            let hideSidebarTimeout;
+            const desktopBreakpoint = 992;
+            
+            // Keep sidebar visible when hovering over content near it
+            sidebarHoverArea.addEventListener('mouseenter', function() {
+                clearTimeout(hideSidebarTimeout);
+                if (sidebar.classList.contains('hidden')) {
+                    sidebar.classList.remove('hidden');
+                }
+            });
+            
+            // Keep sidebar visible when hovering over sidebar
+            sidebar.addEventListener('mouseenter', function() {
+                clearTimeout(hideSidebarTimeout);
+                if (sidebar.classList.contains('hidden')) {
+                    sidebar.classList.remove('hidden');
+                }
+            });
+            
+            // Hide sidebar when mouse leaves both sidebar and hover area
+            function handleMouseLeave() {
+                if (window.innerWidth >= desktopBreakpoint) {
+                    hideSidebarTimeout = setTimeout(function() {
+                        if (!sidebar.classList.contains('hidden') && 
+                            !sidebar.matches(':hover') && 
+                            !sidebarHoverArea.matches(':hover')) {
+                            sidebar.classList.add('hidden');
+                        }
+                    }, 300);
+                }
+            }
+            
+            sidebar.addEventListener('mouseleave', handleMouseLeave);
+            sidebarHoverArea.addEventListener('mouseleave', handleMouseLeave);
+            
+            // Also hide sidebar when scrolling (with delay)
+            window.addEventListener('scroll', function() {
+                if (window.innerWidth >= desktopBreakpoint) {
+                    if (!sidebar.classList.contains('hidden') && 
+                        !sidebar.matches(':hover') && 
+                        !sidebarHoverArea.matches(':hover')) {
+                        hideSidebarTimeout = setTimeout(function() {
+                            sidebar.classList.add('hidden');
+                        }, 500);
+                    }
+                }
+            });
+            
+            // Responsive sidebar behavior
+            function handleResize() {
+                if (window.innerWidth >= desktopBreakpoint) {
+                    sidebar.classList.remove('visible');
+                    sidebar.classList.remove('hidden');
+                } else {
+                    sidebar.classList.add('hidden');
+                }
+            }
+            
+            window.addEventListener('resize', handleResize);
+            
+            // Menu item active state
+            const menuItems = document.querySelectorAll('.menu-item:not(.accordion-toggle)');
+            
+            menuItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+
+            // Course details toggle
+            const expandButtons = document.querySelectorAll('.expand-btn');
+            
+            expandButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const courseId = this.getAttribute('data-course');
+                    const detailsRow = document.getElementById(`${courseId}-details`);
+                    
+                    // Close all other details rows first
+                    document.querySelectorAll('.course-details').forEach(row => {
+                        if (row.id !== `${courseId}-details`) {
+                            row.classList.remove('show');
+                        }
+                    });
+                    
+                    // Toggle the clicked row
+                    detailsRow.classList.toggle('show');
+                });
+            });
+
+            // Table toggle functionality
+            const toggleTableBtn = document.getElementById('toggleTableBtn');
+            const scheduleTable = document.getElementById('scheduleTable');
+            
+            toggleTableBtn.addEventListener('click', function() {
+                if (scheduleTable.style.display === 'none') {
+                    scheduleTable.style.display = 'block';
+                    this.innerHTML = '<i class="fas fa-table"></i><span>Hide Timetable</span>';
+                } else {
+                    scheduleTable.style.display = 'none';
+                    this.innerHTML = '<i class="fas fa-table"></i><span>Show Timetable</span>';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
